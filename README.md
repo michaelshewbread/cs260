@@ -4,7 +4,12 @@
 ## Elevator pitch
 Join a party of primates playing simultaneously across the globe and prove you're the king of the apes. Collect tropical fruits and take aim as you attempt to be the last simian standing on this chaotic island. Watch yourself rise the live leaderboard, but be careful; once you're in first, the others will have an arrow guiding them to your location, so be ready for some greedy chimps closing in! Outside the game, view how your top scores compare to others and etch your name forever in monkey history!
 ## Design
+
+Concept of main game:
+
 ![Conceptual picture of game running](https://github.com/michaelshewbread/cs260/blob/main/design.png)
+
+Rough sketch of login screen:
 
 ![Conceptual picture of website screen](https://github.com/michaelshewbread/cs260/blob/main/examplescreen.png)
 ## Key features
