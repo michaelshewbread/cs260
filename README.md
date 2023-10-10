@@ -37,3 +37,21 @@ A Login service to register new players and login existing ones.
 Input data from all players will be sent via websockets and authoritative player positions will be broadcast to all players. A current leaderboard will also be periodically updated.
 ### React
 The game will be transferred to React.
+
+## HTML Deliverable
+### HTML pages
+Three pages that provide login services, the main game, and a leaderboard service.
+### Links
+As in Simon, the login button takes you to the main page. Each page has a header with links to all other pages.
+### Text
+Appropriate text explaining the different elements in the layout.
+### 3rd party service calls
+Placeholder with sample audio clip for 3rd party web service in main.html
+### Images
+Sample game screen is shown through an image.
+### Login
+Login element included in index.html
+### Database
+Leaderboard.html features a table holding sample data that will be populated by a database later.
+### WebSocket
+The live leaderboard in main.html as well as future game functionality represent placeholders for WebSocket communication.
