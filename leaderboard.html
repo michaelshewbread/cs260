@@ -4,17 +4,21 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Monkey Island</title>
+
+        <link rel="icon" href="coconut.png" />
+        <link rel="stylesheet" href="index.css" />
+        <link rel="stylesheet" href="leaderboard.css" />
     </head>
     <body>
         <header>
-            <h1><center>Monkey Island</center></h1>
+            <h1 class="title"><center>Monkey Island</center></h1>
             <hr />
             <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="main.html">Play</a></li>
-                    <li><a href="leaderboard.html">Leaderboard</a></li>
-                </ul>
+                <div>
+                    <div class="nav-el"><a href="index.html">Home</a></div>
+                    <div class="nav-el"><a href="main.html">Play</a></div>
+                    <div class="nav-el"><a href="leaderboard.html">Leaderboard</a></div>
+                </div>
             </nav>
             <hr />
         </header>
@@ -27,7 +31,7 @@
                     <th>Time</th>
                     <th>KOs</th>
                 </tr>
-                <tr>
+                <tr class="champion">
                     <td>1</td>
                     <td>Chimp champ</td>
                     <td>7 m 39 s</td>
@@ -49,10 +53,8 @@
         </main>
 
         <footer>
-            <hr />
-            <span class="text-reset">Michael Bradshaw</span>
-            <br />
-            <a href="https://github.com/michaelshewbread/cs260">GitHub Repository</a>
-          </footer>
+            <div class="author-name">Michael Bradshaw</div>
+            <a class="source-link" href="https://github.com/michaelshewbread/cs260">GitHub Repository</a>
+        </footer>
     </body>
 </html>

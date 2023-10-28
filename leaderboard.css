@@ -1,0 +1,32 @@
+table {
+    background-color: var(--seashell);
+    color: var(--seashell);
+}
+
+tr {
+    background-color: var(--darkwood);
+}
+
+td, th {
+    padding: 8px;
+    border: var(--darkwood) solid thick;
+}
+
+td {
+    background-color: var(--lightwood);
+}
+
+.champion {
+    animation-name: row-zoom;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes row-zoom{
+    50%{
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
