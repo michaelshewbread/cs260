@@ -1,0 +1,121 @@
+:root{
+    --darkwood: rgb(75, 35, 5);
+    --lightwood: rgb(217, 142, 101);
+    --seablue: rgb(150, 210, 230);
+    --seashell: rgb(235, 221, 191);
+    --coconut: url(coconut.png);
+}
+
+html, body {
+    height: 100%;
+    font-family:Cochin, 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: var(--seablue);
+  }
+
+a {
+    color: var(--seashell);
+}
+
+.title {
+    font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+header {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: black solid thin;
+    background-color: var(--darkwood);
+    color: var(--seashell);
+    border-radius: 0.25rem;
+}
+
+.coconut-1 {
+    padding: 12px;
+    content: var(--coconut);
+    animation-name: roll-left;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    transform: translateX(10px) rotateZ(20deg);
+}
+
+.coconut-2 {
+    padding: 12px;
+    content: var(--coconut);
+    animation-name: roll-right;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    transform: translateX(-10px) rotateZ(-20deg);
+}
+
+@keyframes roll-left {
+    
+    50% {
+        transform: translateX(-10px) rotateZ(-20deg);
+    }
+    100% {
+        transform: translateX(10px) rotateZ(20deg);
+    }
+}
+
+@keyframes roll-right {
+    
+    50% {
+        transform: translateX(10px) rotateZ(20deg);
+    }
+    100% {
+        transform: translateX(-10px) rotateZ(-20deg);
+    }
+}
+
+.nav-el {
+    display: inline;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--lightwood);
+    border: black solid thin;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.button {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-style: italic;
+    background-color: var(--seashell);
+}
+
+footer {
+    margin-top: 10px;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--darkwood);
+    color: var(--seashell);
+}
+
+.author-name {
+    text-align: left;
+    padding: 1rem;
+}
+
+.source-link {
+    text-align: right;
+    padding: 1rem;
+
+}
+

@@ -4,35 +4,40 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Monkey Island</title>
+
+        <link rel="icon" href="coconut.png" />
+        <link rel="stylesheet" href="index.css" />
     </head>
     <body>
         <header>
-            <h1><center>Monkey Island</center></h1>
+            <h1 class="title"><center>Monkey Island</center></h1>
             <hr />
             <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="main.html">Play</a></li>
-                    <li><a href="leaderboard.html">Leaderboard</a></li>
-                </ul>
+                <div>
+                    <div class="nav-el"><a href="index.html">Home</a></div>
+                    <div class="nav-el"><a href="main.html">Play</a></div>
+                    <div class="nav-el"><a href="leaderboard.html">Leaderboard</a></div>
+                </div>
             </nav>
             <hr />
         </header>
 
         <main>
-            <p><center>Enter your monkey's name below to join the brawl!</center></p>
-            <p><center>You're just a hop, click, and a jump away from glory!</center></p>
-            <form align="center" method="get" action="main.html">
-                <input type="text" id="username" placeholder="Your monkey's name here" />
-                <button type="submit"><center>Sail to victory</center></button>
-              </form>
+            <div class="coconut coconut-1"></div>
+            <div>
+                <p><center>Enter your monkey's name below to join the brawl!</center></p>
+                <p><center>You're just a hop, click, and a jump away from glory!</center></p>
+                <form align="center" method="get" action="main.html">
+                    <input type="text" id="username" placeholder="Your monkey's name here" />
+                    <button class="button" type="submit"><center>Sail to victory!</center></button>
+                </form>
+            </div>
+            <div class="coconut coconut-2"></div>
         </main>
 
         <footer>
-            <hr />
-            <span class="text-reset">Michael Bradshaw</span>
-            <br />
-            <a href="https://github.com/michaelshewbread/cs260">GitHub Repository</a>
+            <div class="author-name">Michael Bradshaw</div>
+            <a class="source-link" href="https://github.com/michaelshewbread/cs260">GitHub Repository</a>
           </footer>
     </body>
 </html>
