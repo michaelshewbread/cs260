@@ -4,22 +4,29 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Monkey Island</title>
+
+        <link rel="icon" href="coconut.png" />
+        <link rel="stylesheet" href="index.css" />
+        <link rel="stylesheet" href="leaderboard.css" />
+        <link rel="stylesheet" href="main.css"
     </head>
     <body>
         <header>
-            <h1><center>Monkey Island</center></h1>
+            <h1 class="title"><center>Monkey Island</center></h1>
             <hr />
             <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="main.html">Play</a></li>
-                    <li><a href="leaderboard.html">Leaderboard</a></li>
-                </ul>
+                <div>
+                    <div class="nav-el"><a href="index.html">Home</a></div>
+                    <div class="nav-el"><a href="main.html">Play</a></div>
+                    <div class="nav-el"><a href="leaderboard.html">Leaderboard</a></div>
+                </div>
             </nav>
             <hr />
         </header>
+
         <main>
-            <fieldset id="Thrown fruit">
+            <div class="monkey-attributes">
+              <fieldset id="Thrown fruit">
                 <legend>Choose the fruit your monkey will throw</legend>
                 <label for="checkbox1">Kiwis</label>
                 <input type="radio" id="Kiwis" name="varRadio" value="Kiwis" checked /><br>
@@ -38,39 +45,60 @@
                 <label for="checkbox3">Pineapples</label>
                 <input type="radio" id="Pineapples" name="varRadio2" value="Pineapples" /><br>
               </fieldset>
+            </div>
               <hr />
               <p>That means your monkey is weak to <span class="weakness">whatever the third fruit is!</span> Look out for that one!</p>
               <hr />
-              <h3>Example live leaderboard</h3>
-              <table>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Time</th>
-                    <th>KOs</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Mr. Munkee</td>
-                    <td>5 m 33 s</td>
-                    <td>12</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Orangutango</td>
-                    <td>1 m 17 s</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Chimp champ</td>
-                    <td>22 seconds</td>
-                    <td>0</td>
-                </tr>
-              </table>
-              <hr />
               <h3>Example game screen</h3>
-              <img alt="exampleScreen" src="https://github.com/michaelshewbread/cs260/blob/main/design.png?raw=true" />
+                <!--<canvas id="myCanvas" width="640" height="480">-->
+                <div class="game-screen">
+                  <div class="leaderboard">
+                    <table>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Time</th>
+                            <th>KOs</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Mr. Munkee</td>
+                            <td>5 m 33 s</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Orangutango</td>
+                            <td>1 m 17 s</td>
+                            <td>4</td>
+                        </tr>
+                        <tr class="player-rank">
+                            <td>3</td>
+                            <td>Chimp champ</td>
+                            <td>22 seconds</td>
+                            <td>0</td>
+                        </tr>
+                      </table>
+                  </div>
+                  <div class="fruit-counter">
+                    <div class="coconut_icon"></div>
+                    <div class="counter">
+                      <div class="X">X</div>
+                      <div class="count">10</div>
+                    </div>
+                </div>
+                  <div class="health_bar">
+                    <div class="bar">
+                        <div class="bar-fill"></div>
+                    </div>
+                    <div class="heart_icon"></div>
+                  </div>
+                  <div class="thrown-coconut"></div>
+                  <div class="player"></div>
+                </div>
+              <!--</canvas>-->
+              
+              <div class="monkey"></div>
               <hr />
               <h3>Example web service monkey noise</h3>
               <div id="audio">
@@ -78,9 +106,7 @@
               </div>
         </main>
         <footer>
-            <hr />
-            <span class="text-reset">Michael Bradshaw</span>
-            <br />
-            <a href="https://github.com/michaelshewbread/cs260">GitHub Repository</a>
-        </footer>
+            <div class="author-name">Michael Bradshaw</div>
+            <a class="source-link" href="https://github.com/michaelshewbread/cs260">GitHub Repository</a>
+          </footer>
     </body>

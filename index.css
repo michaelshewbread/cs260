@@ -81,7 +81,7 @@ header {
     border: black solid thin;
 }
 
-main{
+.row {
     display: flex;
     flex-direction: row;
     padding: 0.5rem;

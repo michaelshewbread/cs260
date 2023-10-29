@@ -3,6 +3,13 @@ table {
     color: var(--seashell);
 }
 
+.leaderboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 tr {
     background-color: var(--darkwood);
 }
@@ -16,9 +23,9 @@ td {
     background-color: var(--lightwood);
 }
 
-.champion {
+.player-rank {
     animation-name: row-zoom;
-    animation-duration: 2s;
+    animation-duration: 2.5s;
     animation-iteration-count: infinite;
 }
 
