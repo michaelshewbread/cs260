@@ -212,3 +212,16 @@ canvas {
         width: calc(100% - var(--damage));
     }
 }
+
+@media only screen and (max-width:760px) {
+    .leaderboard {
+        visibility: hidden;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .health_bar {
+        transform: scale(0.8) translateX(-8%);
+    }
+    
+}

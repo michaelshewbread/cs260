@@ -55,3 +55,18 @@ Login element included in index.html
 Leaderboard.html features a table holding sample data that will be populated by a database later.
 ### WebSocket
 The live leaderboard in main.html as well as future game functionality represent placeholders for WebSocket communication.
+
+## CSS Deliverable
+Looks a lot better, but I may still spend some time later to fix some things up. I was taking way too long doing this so I had to stop myself before I don't get the javascript done in time.
+### Header, Footer, Main content
+Headers and footers are all good, had to skip elements on the main (game) page due to time.
+### Navigation elements
+They all work and are stylized a bit. Nothing super crazy.
+### Responsive to window resizing
+I did not attempt this generally, but I did make some elements in the main game disappear or resize if the window got too small.
+### Application elements
+Everything that I plan to have in the final version is here, more or less. I put some animations in to be managed a bit by javascript.
+### Application text content
+I used a few different fonts and colors, trying to keep a consistent palette.
+### Application images
+The pages feature a couple hand-crafted images along with some pure css ones. I think they look passable.
