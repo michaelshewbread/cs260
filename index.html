@@ -7,6 +7,7 @@
 
         <link rel="icon" href="coconut.png" />
         <link rel="stylesheet" href="index.css" />
+        <script src="login.js"></script>
     </head>
     <body>
         <header>
@@ -27,11 +28,12 @@
                 <div class="coconut coconut-1"></div>
                 <div>
                     <p><center>Enter your monkey's name below to join the brawl!</center></p>
+                    <p><center>If you've been here before, we'll load your monkey's data</center></p>
                     <p><center>You're just a hop, click, and a jump away from glory!</center></p>
-                    <form align="center" method="get" action="main.html">
+                    <div>
                         <input type="text" id="username" placeholder="Your monkey's name here" />
-                        <button class="button" type="submit"><center>Sail to victory!</center></button>
-                    </form>
+                        <button class="button" onclick="login()"><center>Sail to victory!</center></button>
+                    </div>
                 </div>
                 <div class="coconut coconut-2"></div>
             </div>
