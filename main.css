@@ -21,11 +21,20 @@ canvas {
 }
 
 .map {
-    background-image: url(islandmap.png);
     background-size: 100%;
     width: 1200px;
     height: 1200px;
     position: relative;
+}
+
+#ground {
+    /*background-image: url(islandgroundmap.png);*/
+    z-index: 0;
+}
+
+#trees {
+    content: url(islandtreemap.png);
+    z-index: 1;
 }
 
 .player {
@@ -71,9 +80,9 @@ canvas {
     margin-right: auto; 
     margin-top: auto;
     margin-bottom: auto;
-    animation-name: thrown-coconut;
+    /*animation-name: thrown-coconut;
     animation-duration: 5s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: infinite;*/
 }
 
 @keyframes thrown-coconut {
@@ -86,6 +95,10 @@ canvas {
     100% {
         transform: translateX(-1000px);
     }
+}
+
+.GUI {
+    z-index: 2;
 }
 
 .leaderboard {
@@ -161,9 +174,9 @@ canvas {
     position: absolute;
     bottom: 16px;
     left: 16px;
-    animation-name: shake-bar;
+    /*animation-name: shake-bar;
     animation-duration: 5s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: infinite;*/
 }
 
 .bar-fill {
@@ -172,9 +185,9 @@ canvas {
     width: 100%;
     height: 100%;
     background-color: blue;
-    animation-name: lose_health;
+    /*animation-name: lose_health;
     animation-duration: 5s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: infinite;*/
 }
 
 @keyframes shake-bar {

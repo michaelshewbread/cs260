@@ -12,6 +12,9 @@ let rot = 0;
 const screenWidth = window.screen.width;
 const screenHeight = window.screen.height; 
 
+const startXpos = -1200;
+const startYpos = -800;
+
 let held_directions = [];
 
 let speed = 5;
@@ -25,10 +28,9 @@ const positionPlayer = () => {
         if (held_direction === 's') {ypos += speed;}
     }
 
-    //this needs to be updated to take change in screen size into account, its very inaccurate
-    map.style.transform = "translate("+ (-xpos-(screenWidth/2)+925) + "px," + (-ypos-(screenHeight/2)+150) + "px)";
+    map.style.transform = "translate("+ ((startXpos+innerWidth)/2-xpos) + "px," + (startYpos-ypos) + "px)";
     
-    player.style.transform = "translate("+ xpos + "px," + ypos + "px) rotate(" + rot + "deg)";
+    player.style.transform = "rotate(" + rot + "deg)";
 }
 
 const step = () => {
@@ -63,3 +65,7 @@ document.addEventListener("mousemove", (evt) => {
     rot = (-1*((Math.atan2(y,x) *(180 / Math.PI)) + 90))+180; 
 
 });
+
+document.addEventListener("click", (evt) =>{
+    
+})
