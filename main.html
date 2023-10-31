@@ -8,7 +8,8 @@
         <link rel="icon" href="coconut.png" />
         <link rel="stylesheet" href="index.css" />
         <link rel="stylesheet" href="leaderboard.css" />
-        <link rel="stylesheet" href="main.css"
+        <link rel="stylesheet" href="main.css">
+
     </head>
     <body>
         <header>
@@ -52,8 +53,11 @@
               <h3>Example game screen</h3>
                 <!--<canvas id="myCanvas" width="640" height="480">-->
                 <div class="game-screen">
-                  <div class="leaderboard">
-                    <table>
+                  <div class="map">
+                    <div class="player"></div>
+                  </div>
+                    <div class="leaderboard">
+                      <table>
                         <tr>
                             <th>Rank</th>
                             <th>Player</th>
@@ -74,7 +78,7 @@
                         </tr>
                         <tr class="player-rank">
                             <td>3</td>
-                            <td>Chimp champ</td>
+                            <td class="player-name">Chimp champ</td>
                             <td>22 seconds</td>
                             <td>0</td>
                         </tr>
@@ -94,8 +98,7 @@
                     <div class="heart_icon"></div>
                   </div>
                   <div class="thrown-coconut"></div>
-                  <div class="player"></div>
-                </div>
+              </div>
               <!--</canvas>-->
               
               <div class="monkey"></div>
@@ -110,3 +113,5 @@
             <a class="source-link" href="https://github.com/michaelshewbread/cs260">GitHub Repository</a>
           </footer>
     </body>
+
+    <script src="main.js"></script>

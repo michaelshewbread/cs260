@@ -17,6 +17,15 @@ canvas {
     height: 688px;
     background-color: #8ed867;
     border: var(--darkwood) solid thick;
+    overflow: hidden;
+}
+
+.map {
+    background-image: url(islandmap.png);
+    background-size: 100%;
+    width: 1200px;
+    height: 1200px;
+    position: relative;
 }
 
 .player {
@@ -30,9 +39,10 @@ canvas {
     margin-right: auto; 
     margin-top: auto;
     margin-bottom: auto;
-    animation-name: spin;
+    overflow: hidden;
+    /*animation-name: spin;
     animation-duration: 5s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: infinite;*/
 }
 
 @keyframes spin {
