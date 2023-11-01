@@ -85,15 +85,12 @@ canvas {
     animation-iteration-count: infinite;*/
 }
 
-@keyframes thrown-coconut {
+@keyframes throw-coconut {
     0% {
         transform: translateX(0px);
     }
-    40% {
-        transform: translateX(0px);
-    }
     100% {
-        transform: translateX(-1000px);
+        transform: translateX(-50vw);
     }
 }
 

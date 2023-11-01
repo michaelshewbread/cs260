@@ -1,5 +1,10 @@
 let player = document.querySelector(".player");
 let map = document.querySelector(".map");
+let coconut = document.querySelector(".thrown-coconut");
+let secondCounter = document.querySelector("#seconds");
+let secondText = document.querySelector("#second-text");
+let minuteCounter = document.querySelector("#minutes");
+let minuteText = document.querySelector("#minute-text");
 
 let playername = document.querySelector(".player-name");
 playername.textContent = localStorage.getItem("username");
@@ -8,6 +13,9 @@ let xpos = 0;
 let ypos = 0;
 
 let rot = 0;
+
+let seconds = 0;
+let minutes = 0;
 
 const screenWidth = window.screen.width;
 const screenHeight = window.screen.height; 
@@ -39,6 +47,21 @@ const step = () => {
 }
 step();
 
+setInterval(incrementTime, 1000);
+
+function incrementTime() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        minuteCounter.innerHTML = minutes;
+        minuteText.innerHTML = `m`;
+        secondText.innerHTML = `s`;
+    }
+    secondCounter.innerHTML = seconds;
+}
+
+
 document.addEventListener("keydown", (evt) => {
     let dir = evt.key;
     if (dir && held_directions.indexOf(dir) === -1) {
@@ -67,5 +90,20 @@ document.addEventListener("mousemove", (evt) => {
 });
 
 document.addEventListener("click", (evt) =>{
-    
+    throwCoconut(10);
 })
+
+function throwCoconut(velocity) {
+    let rad = (rot-90) * (Math.PI/180);
+    let range = (velocity * velocity)*6;
+    let time = (2 * velocity * 1.4)*20; //divided by gravity, but multiplied by 1000 ms
+    coconut.animate([
+        // key frames
+        { transform: 'translate(0px, 0px)' },
+        { transform: 'translate(' + Math.cos(rad)*range + 'px, '+ Math.sin(rad)*range + 'px)' }
+      ], {
+        // sync options
+        duration: time,
+        iterations: 1
+      });
+}
