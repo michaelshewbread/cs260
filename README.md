@@ -70,3 +70,22 @@ Everything that I plan to have in the final version is here, more or less. I put
 I used a few different fonts and colors, trying to keep a consistent palette.
 ### Application images
 The pages feature a couple hand-crafted images along with some pure css ones. I think they look passable.
+
+## HTML Deliverable
+### Login
+Saves username to local storage and applies it to the live leaderboard in the main game.
+
+### Database
+Placeholder data for the leaderboard will be replaced with database data later.
+
+### WebSocket
+There is placeholder data in the live leaderboard that will be replaced with other player data layer. The positioning system saves player position independent of the map position, so these (x,y) positions can be sent over a websocket to give accurate positions of other players.
+
+### Application logic
+Not everything is here, but several of the most important features are. This includes:
+* Ground and tree map layering
+* Live leaderboard functionality
+* Correct player movement and positioning, even when window is resized
+* Correct player rotation when in full screen, still working on allowing it to work after resizing window
+* Basic throwing mechanics
+* Interactable health bar, though nothing affects it right now.
