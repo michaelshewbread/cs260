@@ -5,6 +5,8 @@ let secondCounter = document.querySelector("#seconds");
 let secondText = document.querySelector("#second-text");
 let minuteCounter = document.querySelector("#minutes");
 let minuteText = document.querySelector("#minute-text");
+let rank = document.querySelector("#rank");
+let KOs = document.querySelector("#KOs");
 
 let playername = document.querySelector(".player-name");
 playername.textContent = localStorage.getItem("username");
@@ -91,6 +93,7 @@ document.addEventListener("mousemove", (evt) => {
 
 document.addEventListener("click", (evt) =>{
     throwCoconut(10);
+    onDeath();
 })
 
 function throwCoconut(velocity) {
@@ -106,4 +109,19 @@ function throwCoconut(velocity) {
         duration: time,
         iterations: 1
       });
+}
+
+document.addEventListener('beforeunload', (evt) => {
+    onDeath();
+});
+
+function onDeath() {
+    scores = JSON.parse(localStorage.getItem('scores'));
+    score = {"name":playername.innerHTML, "time":{"seconds":seconds, "minutes":minutes}, "KOs": KOs.innerHTML};
+    if (scores) {
+        scores.push(score);
+    } else {
+        scores = [score];
+    }
+    localStorage.setItem("scores", JSON.stringify(scores));
 }
