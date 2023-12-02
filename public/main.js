@@ -7,6 +7,7 @@ let minuteCounter = document.querySelector("#minutes");
 let minuteText = document.querySelector("#minute-text");
 let rank = document.querySelector("#rank");
 let KOs = document.querySelector("#KOs");
+let gameOverText = document.querySelector("#gameOverText");
 
 let playername = document.querySelector(".player-name");
 playername.textContent = localStorage.getItem("username");
@@ -29,6 +30,8 @@ let held_directions = [];
 
 let speed = 5;
 
+let isDead = false;
+
 const positionPlayer = () => {
     const held_direction = held_directions[0];
     if (held_direction) {
@@ -44,28 +47,35 @@ const positionPlayer = () => {
 }
 
 const step = () => {
-    positionPlayer();
-    window.requestAnimationFrame(()=> {step();})
+    if (!isDead) {
+        positionPlayer();
+        window.requestAnimationFrame(()=> {step();})
+    }
 }
 step();
 
 setInterval(incrementTime, 1000);
 
 function incrementTime() {
-    seconds++;
-    if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-        minuteCounter.innerHTML = minutes;
-        minuteText.innerHTML = `m`;
-        secondText.innerHTML = `s`;
+    if (!isDead) {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            minuteCounter.innerHTML = minutes;
+            minuteText.innerHTML = `m`;
+            secondText.innerHTML = `s`;
+        }
+        secondCounter.innerHTML = seconds;
     }
-    secondCounter.innerHTML = seconds;
 }
 
 
 document.addEventListener("keydown", (evt) => {
     let dir = evt.key;
+    if (dir === 'q') {
+        onDeath();
+    }
     if (dir && held_directions.indexOf(dir) === -1) {
         held_directions.unshift(dir);
     }
@@ -92,8 +102,9 @@ document.addEventListener("mousemove", (evt) => {
 });
 
 document.addEventListener("click", (evt) =>{
-    throwCoconut(10);
-    onDeath();
+    if (!isDead) {
+        throwCoconut(10);
+    }
 })
 
 function throwCoconut(velocity) {
@@ -115,7 +126,13 @@ document.addEventListener('beforeunload', (evt) => {
     onDeath();
 });
 
+function displayDeathScreen() {
+    gameOverText.style.visibility = "visible";
+}
+
 function onDeath() {
+    isDead = true;
+    displayDeathScreen();
     scores = JSON.parse(localStorage.getItem('scores'));
     score = {"name":playername.innerHTML, "time":{"seconds":seconds, "minutes":minutes}, "KOs": KOs.innerHTML};
     if (scores) {
