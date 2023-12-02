@@ -3,7 +3,7 @@
     --lightwood: rgb(217, 142, 101);
     --seablue: rgb(150, 210, 230);
     --seashell: rgb(235, 221, 191);
-    --coconut: url(coconut.png);
+    --coconut: url(assets/coconut.png);
 }
 
 html, body {

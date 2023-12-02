@@ -33,12 +33,12 @@ canvas {
 }
 
 #trees {
-    content: url(islandtreemap.png);
+    content: url(assets/islandtreemap.png);
     z-index: 1;
 }
 
 .player {
-    content: url(munkey.png);
+    content: url(assets/munkey.png);
     position: absolute;
     left: 0; 
     right: 0; 
@@ -156,7 +156,7 @@ canvas {
 }
 
 .heart_icon {
-    content: url(heart_icon.png);
+    content: url(assets/heart_icon.png);
     position: absolute;
     left: 0px; 
     bottom: 10px;
