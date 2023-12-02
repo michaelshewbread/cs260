@@ -7,11 +7,11 @@ Join a party of primates playing simultaneously across the globe and prove you'r
 
 Concept of main game:
 
-![Conceptual picture of game running](https://github.com/michaelshewbread/cs260/blob/main/design.png)
+![Conceptual picture of game running](https://github.com/michaelshewbread/cs260/blob/main/public/assets/design.png)
 
 Rough sketch of login screen:
 
-![Conceptual picture of website screen](https://github.com/michaelshewbread/cs260/blob/main/examplescreen.png)
+![Conceptual picture of website screen](https://github.com/michaelshewbread/cs260/blob/main/public/assets/examplescreen.png)
 ## Key features
 * Simultaneous multiplayer
 * Keyboard input moves character around map
@@ -71,7 +71,7 @@ I used a few different fonts and colors, trying to keep a consistent palette.
 ### Application images
 The pages feature a couple hand-crafted images along with some pure css ones. I think they look passable.
 
-## HTML Deliverable
+## JavaScript Deliverable
 ### Login
 Saves username to local storage and applies it to the live leaderboard in the main game.
 
@@ -89,3 +89,10 @@ Not everything is here, but several of the most important features are. This inc
 * Correct player rotation when in full screen, still working on allowing it to work after resizing window
 * Basic throwing mechanics
 * Interactable health bar, though nothing affects it right now.
+
+## Service Deliverable
+### Node.js/Express HTTP service
+### Static middleware for frontend
+### Calls to third party endpoints
+### Backend service endpoints
+### Frontend calls service endpoints
