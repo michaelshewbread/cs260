@@ -1,31 +1,66 @@
-function loadScores() {
-    let scores = JSON.parse(localStorage.getItem('scores'));
-    if (scores) {
-        let hasChanged = false;
-        do {
-            for(let i=0; i < scores.length - 1; i++) {
-                if (scores[i].time.seconds > scores[i+1].time.seconds) {
-                    temp = scores[i];
-                    scores[i+1] = temp;
-                    scores[i] = scores[i+1];
-                    hasChanged = true;
-                }
+async function loadScores() {
+  let scores = [];
+  try {
+    const response = await fetch('/api/leaderboard');
+    scores = await response.json();
+
+    localStorage.setItem('scores', JSON.stringify(scores));
+    console.log("loaded leaderboard");
+  } catch {
+    console.log("Error calling /api/leaderboard");
+    scores = JSON.parse(localStorage.getItem('scores'));
+  }
+
+  if (scores) {
+      let hasChanged = false;
+      do {
+        hasChanged = false;
+          for(let i=0; i < scores.length - 1; i++) {
+            if (scores[i].time.minutes < scores[i+1].time.minutes) {
+              temp = scores[i];
+              scores[i+1] = temp;
+              scores[i] = scores[i+1];
+              hasChanged = true;
             }
-        } while (hasChanged);
-    }
+            else if (scores[i].time.seconds < scores[i+1].time.seconds) {
+              temp = scores[i];
+              scores[i+1] = temp;
+              scores[i] = scores[i+1];
+              hasChanged = true;
+            }
+          }
+      } while (hasChanged);
+  }
   
     const tableBodyEl = document.querySelector('#scores');
   
-    if (scores) {
+    // if you give a tr element the class="player-rank" thing,
+    // the css will animate it differently, so do that.
+    if (scores.length) {
       for (const [i, score] of scores.entries()) {
+
         const rankTdEl = document.createElement('td');
         const nameTdEl = document.createElement('td');
         const timeTdEl = document.createElement('td');
         const KOsTdEl = document.createElement('td');
-  
+
+        const minutes = document.createElement('span');
+        const minute_text = document.createElement('span');
+        const seconds = document.createElement('span');
+        const second_text = document.createElement('span');
+        
+        minute_text.textContent = ' m ';
+        second_text.textContent = ' s ';
+        minutes.textContent = score.time.minutes;
+        seconds.textContent = score.time.seconds;
+
+        timeTdEl.appendChild(minutes);
+        timeTdEl.appendChild(minute_text);
+        timeTdEl.appendChild(seconds);
+        timeTdEl.appendChild(second_text);
+
         rankTdEl.textContent = i + 1;
         nameTdEl.textContent = score.name;
-        timeTdEl.textContent = score.time;
         KOsTdEl.textContent = score.KOs;
   
         const rowEl = document.createElement('tr');
@@ -33,6 +68,10 @@ function loadScores() {
         rowEl.appendChild(nameTdEl);
         rowEl.appendChild(timeTdEl);
         rowEl.appendChild(KOsTdEl);
+
+        if (score.name === localStorage.getItem("username")) {
+          rowEl.classList.add("player-rank");
+        }
   
         tableBodyEl.appendChild(rowEl);
       }

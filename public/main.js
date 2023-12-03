@@ -73,7 +73,7 @@ function incrementTime() {
 
 document.addEventListener("keydown", (evt) => {
     let dir = evt.key;
-    if (dir === 'q') {
+    if (dir === 'q' && !isDead) {
         onDeath();
     }
     if (dir && held_directions.indexOf(dir) === -1) {
@@ -122,23 +122,31 @@ function throwCoconut(velocity) {
       });
 }
 
-document.addEventListener('beforeunload', (evt) => {
-    onDeath();
-});
-
 function displayDeathScreen() {
     gameOverText.style.visibility = "visible";
 }
 
-function onDeath() {
+async function onDeath() {
     isDead = true;
     displayDeathScreen();
-    scores = JSON.parse(localStorage.getItem('scores'));
-    score = {"name":playername.innerHTML, "time":{"seconds":seconds, "minutes":minutes}, "KOs": KOs.innerHTML};
-    if (scores) {
-        scores.push(score);
-    } else {
-        scores = [score];
+    const score = {"name":playername.innerHTML, "time":{"seconds":seconds, "minutes":minutes}, "KOs": KOs.innerHTML};
+    try {
+        const response = await fetch('/api/score', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(score),
+        });
+
+        const scores = await response.json();
+        localStorage.setItem('scores', JSON.stringify(scores));
+
+    } catch {
+        let scores = JSON.parse(localStorage.getItem('scores'));
+        if (scores) {
+            scores.push(score);
+        } else {
+            scores = [score];
+        }
+        localStorage.setItem("scores", JSON.stringify(scores));
     }
-    localStorage.setItem("scores", JSON.stringify(scores));
 }
