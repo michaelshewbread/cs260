@@ -8,6 +8,7 @@ let minuteText = document.querySelector("#minute-text");
 let rank = document.querySelector("#rank");
 let KOs = document.querySelector("#KOs");
 let gameOverText = document.querySelector("#gameOverText");
+let quoteText = document.querySelector("#quoteText");
 
 let playername = document.querySelector(".player-name");
 playername.textContent = localStorage.getItem("username");
@@ -29,18 +30,27 @@ const startYpos = -800;
 let held_directions = [];
 
 let speed = 5;
+const walkSpeed = 5;
+const runSpeed = 7;
 
 let isDead = false;
 
 const positionPlayer = () => {
-    const held_direction = held_directions[0];
-    if (held_direction) {
-        if (held_direction === 'd') {xpos += speed;}
-        if (held_direction === 'a') {xpos -= speed;}
-        if (held_direction === 'w') {ypos -= speed;}
-        if (held_direction === 's') {ypos += speed;}
+    for (i = 0; i < held_directions.length; i++) {
+        const held_direction = held_directions[i];
+        if (held_direction === 'KeyD') {
+            xpos += speed;
+        }
+        if (held_direction === 'KeyA') {
+            xpos -= speed;
+        }
+        if (held_direction === 'KeyW') {
+            ypos -= speed;
+        }
+        if (held_direction === 'KeyS') {
+            ypos += speed;
+        }
     }
-
     map.style.transform = "translate("+ ((startXpos+innerWidth)/2-xpos) + "px," + (startYpos-ypos) + "px)";
     
     player.style.transform = "rotate(" + rot + "deg)";
@@ -72,19 +82,25 @@ function incrementTime() {
 
 
 document.addEventListener("keydown", (evt) => {
-    let dir = evt.key;
-    if (dir === 'q' && !isDead) {
+    let key = evt.code;
+    if (key === 'KeyQ' && !isDead) {
         onDeath();
     }
-    if (dir && held_directions.indexOf(dir) === -1) {
-        held_directions.unshift(dir);
+    if (key === 'ShiftLeft') {
+        speed = runSpeed;
+    }
+    if (key && held_directions.indexOf(key) === -1) {
+        held_directions.unshift(key);
     }
 });
 
 document.addEventListener("keyup", (evt) => {
     //delete the released key from the array
-    let dir = evt.key;
-    let index = held_directions.indexOf(dir);
+    let key = evt.code;
+    if (evt.code === 'ShiftLeft') {
+        speed = walkSpeed;
+    }
+    let index = held_directions.indexOf(key);
     if (index > -1) {
         held_directions.splice(index, 1);
     }
@@ -122,8 +138,15 @@ function throwCoconut(velocity) {
       });
 }
 
-function displayDeathScreen() {
+async function displayDeathScreen() {
     gameOverText.style.visibility = "visible";
+    fetch('https://api.quotable.io/random')
+    .then((response) => response.json())
+    .then((data) => {
+      quoteText.textContent += data.content;
+      //authorEl.textContent = data.author;
+    });
+    quoteText.style.visibility = "visible";
 }
 
 async function onDeath() {
