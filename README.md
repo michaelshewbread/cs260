@@ -91,8 +91,14 @@ Not everything is here, but several of the most important features are. This inc
 * Interactable health bar, though nothing affects it right now.
 
 ## Service Deliverable
+It's all working how it should except that the current third-party service is a placeholder; see below. Note: since there is nothing to damage the player, pressing 'q' kills the player for testing purposes.
 ### Node.js/Express HTTP service
+The app now uses Node.js and Express.
 ### Static middleware for frontend
+Express serves the frontend now.
 ### Calls to third party endpoints
+Right now it calls the same API as Simon, I have another that I'm going to use but it has an API key and I don't want to put that in my source code so I'm going to add it when I have access to a database.
 ### Backend service endpoints
+Backend accepts calls to add a score, return the leaderboard, add a user, and return all users. The user part won't be as useful until authentication is implemented.
 ### Frontend calls service endpoints
+The frontend correctly calls the endpoints to add a score when the player dies and retrieve the scores when on the leaderboard page.
