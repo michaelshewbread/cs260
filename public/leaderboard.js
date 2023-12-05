@@ -18,14 +18,20 @@ async function loadScores() {
           for(let i=0; i < scores.length - 1; i++) {
             if (scores[i].time.minutes < scores[i+1].time.minutes) {
               temp = scores[i];
-              scores[i+1] = temp;
               scores[i] = scores[i+1];
+              scores[i+1] = temp;
+              hasChanged = true;
+            }
+            else if (scores[i].KOs < scores[i+1].KOs) {
+              temp = scores[i];
+              scores[i] = scores[i+1];
+              scores[i+1] = temp;
               hasChanged = true;
             }
             else if (scores[i].time.seconds < scores[i+1].time.seconds) {
               temp = scores[i];
-              scores[i+1] = temp;
               scores[i] = scores[i+1];
+              scores[i+1] = temp;
               hasChanged = true;
             }
           }

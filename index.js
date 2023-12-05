@@ -48,22 +48,22 @@ app.listen(port, () => {
 // inserts new score in leaderboard if applicable
 let scores = [];
 function updateLeaderboard(newScore, scores) {
-  let found = false;
+  /*let found = false;
   for (const [i, prevScore] of scores.entries()) {
     if (newScore.score > prevScore.score) {
       scores.splice(i, 0, newScore);
       found = true;
       break;
     }
-  }
+  }*/
 
-  if (!found) {
-    scores.push(newScore);
-  }
+  //if (!found) {
+  scores.push(newScore);
+  //}
 
-  if (scores.length > 10) {
+  /*if (scores.length > 10) {
     scores.length = 10;
-  }
+  }*/
 
   return scores;
 }
@@ -71,8 +71,8 @@ function updateLeaderboard(newScore, scores) {
 let users = [];
 function addUser(newUser, users) {
     let found = false;
-    for (user in users) {
-      if (newUser.name == user.name) {
+    for (let i = 0; i < users.length; i++) {
+      if (newUser.name === users[i].name) {
         found = true;
         break;
       }
