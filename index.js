@@ -1,4 +1,5 @@
 const express = require('express');
+const DB = require('./database');
 const app = express();
 
 // The service port. In production the frontend code is statically hosted by the service on the same port.
@@ -15,14 +16,16 @@ const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // GET the leaderboard
-apiRouter.get('/leaderboard', (_req, res) => {
-  res.send(scores);
+apiRouter.get('/leaderboard', async (_req, res) => {
+  const leaderboard = await DB.getLeaderboard();
+  res.send(leaderboard);
 });
 
 // POST new score
-apiRouter.post('/score', (req, res) => {
-  scores = updateLeaderboard(req.body, scores);
-  res.send(scores);
+apiRouter.post('/score', async (req, res) => {
+  DB.addScore(req.body);
+  const leaderboard = await DB.getLeaderboard();
+  res.send(leaderboard);
 });
 
 // POST new user
@@ -58,13 +61,20 @@ function updateLeaderboard(newScore, scores) {
   }*/
 
   //if (!found) {
-  scores.push(newScore);
+  //scores.push(newScore);
+  DB.addScore(newScore);
   //}
 
   /*if (scores.length > 10) {
     scores.length = 10;
   }*/
 
+  return scores;
+}
+
+async function returnLeaderboard() {
+  scores = await DB.getLeaderboard();
+  // console.log(scores);
   return scores;
 }
 

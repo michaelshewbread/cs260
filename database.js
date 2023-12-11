@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-const config = require('./dbConfig.json');
+const config = require('./public/dbConfig.json');
 
 // Connect to the database cluster
 const url = `mongodb+srv://${config.username}:${config.password}@${config.hostname}`;
@@ -22,15 +22,14 @@ async function addScore(score) {
     return result;
 };
 
-function getHighScores() {
-    const query = { score: { $gt: 0, $lt: 900 } };
-    const options = {
-      sort: { score: -1 },
-      limit: 10,
-    };
-    const cursor = scoreCollection.find(query, options);
-    return cursor.toArray();
+function getLeaderboard() {
+    try {
+        console.log("retrieving leaderboard");
+        return collection.find({}).toArray();
+    } catch {
+        console.log("Error retrieving leaderboard!");
+    }
   }
 
-  module.exports = { addScore, getHighScores };
+  module.exports = { addScore, getLeaderboard };
   

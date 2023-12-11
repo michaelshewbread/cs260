@@ -3,6 +3,8 @@ async function loadScores() {
   try {
     const response = await fetch('/api/leaderboard');
     scores = await response.json();
+    console.log("scores:");
+    console.log(scores);
 
     localStorage.setItem('scores', JSON.stringify(scores));
     console.log("loaded leaderboard");
@@ -85,5 +87,5 @@ async function loadScores() {
       tableBodyEl.innerHTML = '<tr><td colSpan=4>Looks like no one has played...</td></tr>';
     }
   }
-  
+  console.log("START!");
   loadScores();
