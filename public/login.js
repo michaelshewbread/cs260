@@ -13,14 +13,15 @@ async function login() {
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({username: username, password: password}),
     });
-    if (response.status != 200) {
+    if (response.ok) {
+      localStorage.setItem("username", username);
+      window.location.href = "main.html";
+    } else {
       console.log("Authentication error!");
     }
   } catch {
     // *gulp*
   }
-  localStorage.setItem("username", username);
-  window.location.href = "main.html";
 }
 
 async function register() {
@@ -36,12 +37,14 @@ async function register() {
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({username: username, password: password}), //may not work how i want
     });
-    if (response.status != 200) {
+    if (response.ok) {
+      localStorage.setItem("username", username);
+      // to the game!
+      window.location.href = "main.html";
+    } else {
       console.log("Registration error!");
     }
   } catch {
     // *gulp*
   }
-  // to the game!
-  window.location.href = "main.html";
 }
