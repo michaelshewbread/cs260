@@ -111,3 +111,12 @@ Working flawlessly.
 Replaced connections with local storage to database.
 ### Stores data in database
 Currently all scores are saved to and pulled from the database.
+
+## Login Deliverable
+### Supports new user registration
+
+### Supports existing user authentication
+
+### Stores and retrieves credentials in MongoDB
+
+### Restricts application functionality based upon authentication
