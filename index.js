@@ -30,13 +30,13 @@ apiRouter.post('/score', async (req, res) => {
 
 // POST new user
 apiRouter.post('/user', (req, res) => {
-    users = addUser(req.body, users);
-    res.send(users);
-  });
+  users = addUser(req.body, users);
+  res.send(users);
+});
 
 // GET users from storage
 apiRouter.get('/users', (_req, res) => {
-    res.send(users);
+  res.send(users);
 });
 
 // Return the application's default page if the path is unknown
@@ -80,17 +80,17 @@ async function returnLeaderboard() {
 
 let users = [];
 function addUser(newUser, users) {
-    let found = false;
-    for (let i = 0; i < users.length; i++) {
-      if (newUser.name === users[i].name) {
-        found = true;
-        break;
-      }
+  let found = false;
+  for (let i = 0; i < users.length; i++) {
+    if (newUser.name === users[i].name) {
+      found = true;
+      break;
     }
-  
-    if (!found) {
-      users.push(newUser);
-    }
-  
-    return users;
   }
+  
+  if (!found) {
+    users.push(newUser);
+  }
+  
+  return users;
+}
