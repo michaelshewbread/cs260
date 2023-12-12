@@ -102,3 +102,12 @@ Right now it calls the same API as Simon, I have another that I'm going to use b
 Backend accepts calls to add a score, return the leaderboard, add a user, and return all users. The user part won't be as useful until authentication is implemented.
 ### Frontend calls service endpoints
 The frontend correctly calls the endpoints to add a score when the player dies and retrieve the scores when on the leaderboard page.
+
+## Database Deliverable
+Replaced local storage for keeping scores with a persistant database.
+### MongoDB database
+Working flawlessly.
+### Backend endpoints for data
+Replaced connections with local storage to database.
+### Stores data in database
+Currently all scores are saved to and pulled from the database.
