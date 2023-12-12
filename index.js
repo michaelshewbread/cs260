@@ -18,7 +18,7 @@ const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // CreateAuth token for a new monkey
-apiRouter.post('/auth/create', async (req, res) => {
+apiRouter.post('/auth/register', async (req, res) => {
   if (await DB.getUser(req.body.username)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
@@ -51,6 +51,7 @@ const secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
+  // look for that num num
   authToken = req.cookies['token'];
   const user = await DB.getUserByToken(authToken);
   if (user) {
