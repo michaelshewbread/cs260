@@ -1,3 +1,5 @@
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 const express = require('express');
 const DB = require('./database');
 const app = express();
@@ -5,38 +7,75 @@ const app = express();
 // The service port. In production the frontend code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-// JSON body parsing using built-in middleware
-app.use(express.json());
+app.use(express.json()); // JSON body parsing middleware
+app.use(cookieParser()); // use cookie-parsing middleware
 
-// Serve up the frontend static content hosting
-app.use(express.static('public'));
+app.use(express.static('public')); // Serve up frontend static content hosting
+app.set('trust proxy', true) // Trust da headers
 
 // Router for service endpoints
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+// CreateAuth token for a new monkey
+apiRouter.post('/auth/create', async (req, res) => {
+  if (await DB.getUser(req.body.username)) {
+    res.status(409).send({ msg: 'Existing user' });
+  } else {
+    const user = await DB.registerUser(req.body.username, req.body.password);
+    setAuthCookie(res, user.token);
+    res.send({ id: user._id });
+  }
+});
+
+// Get AuthToken for the provided credentials
+apiRouter.post('/auth/login', async (req, res) => {
+  const user = await DB.getUser(req.body.username);
+  if (user) {
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      setAuthCookie(res, user.token);
+      res.send({ id: user._id });
+      return;
+    }
+  }
+  res.status(401).send({ msg: 'Unauthorized' });
+});
+
+// DeleteAuth token if stored in cookie
+apiRouter.delete('/auth/logout', (_req, res) => {
+  res.clearCookie('token');
+  res.status(204).end();
+});
+
+const secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
+
+secureApiRouter.use(async (req, res, next) => {
+  authToken = req.cookies['token'];
+  const user = await DB.getUserByToken(authToken);
+  if (user) {
+    next();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
 // GET the leaderboard
-apiRouter.get('/leaderboard', async (_req, res) => {
+secureApiRouter.get('/leaderboard', async (_req, res) => {
   const leaderboard = await DB.getLeaderboard();
   res.send(leaderboard);
 });
 
 // POST new score
-apiRouter.post('/score', async (req, res) => {
+secureApiRouter.post('/score', async (req, res) => {
   DB.addScore(req.body);
   const leaderboard = await DB.getLeaderboard();
   res.send(leaderboard);
 });
 
-// POST new user
-apiRouter.post('/user', (req, res) => {
-  users = addUser(req.body, users);
-  res.send(users);
-});
-
-// GET users from storage
-apiRouter.get('/users', (_req, res) => {
-  res.send(users);
+// Default error handler
+app.use(function (err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
 });
 
 // Return the application's default page if the path is unknown
@@ -44,53 +83,15 @@ app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
+// setAuthCookie in the HTTP response
+function setAuthCookie(res, authToken) {
+  res.cookie('token', authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
-
-// inserts new score in leaderboard if applicable
-let scores = [];
-function updateLeaderboard(newScore, scores) {
-  /*let found = false;
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
-    }
-  }*/
-
-  //if (!found) {
-  //scores.push(newScore);
-  DB.addScore(newScore);
-  //}
-
-  /*if (scores.length > 10) {
-    scores.length = 10;
-  }*/
-
-  return scores;
-}
-
-async function returnLeaderboard() {
-  scores = await DB.getLeaderboard();
-  // console.log(scores);
-  return scores;
-}
-
-let users = [];
-function addUser(newUser, users) {
-  let found = false;
-  for (let i = 0; i < users.length; i++) {
-    if (newUser.name === users[i].name) {
-      found = true;
-      break;
-    }
-  }
-  
-  if (!found) {
-    users.push(newUser);
-  }
-  
-  return users;
-}

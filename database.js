@@ -29,7 +29,15 @@ function getLeaderboard() {
     } catch {
         console.log("Error retrieving leaderboard!");
     }
-  }
+}
 
-  module.exports = { addScore, getLeaderboard };
+function getUser(username) {
+
+}
+
+function registerUser(username, password) {
+
+}
+
+  module.exports = { addScore, getLeaderboard, getUser, registerUser };
   
