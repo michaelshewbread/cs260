@@ -6,6 +6,10 @@
     --coconut: url(assets/coconut.png);
 }
 
+.restricted {
+    visibility: hidden;
+}
+
 html, body {
     height: 100%;
     font-family:Cochin, 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;

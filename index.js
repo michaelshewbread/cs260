@@ -41,6 +41,17 @@ apiRouter.post('/auth/login', async (req, res) => {
   res.status(401).send({ msg: 'Unauthorized' });
 });
 
+// authenticate current user
+apiRouter.get('/auth/me', async (req, res) => {
+  authToken = req.cookies['token'];
+  const user = await DB.authenticate(authToken);
+  if (user) {
+    res.send({ username: user.username });
+    return;
+  }
+  res.status(401).send({ msg: 'Unauthorized' });
+});
+
 // DeleteAuth token if stored in cookie
 apiRouter.delete('/auth/logout', (_req, res) => {
   res.clearCookie('token');
@@ -52,7 +63,7 @@ apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
   // look for that num num
-  authToken = req.cookies['token'];
+  authToken = document.cookies['token'];
   const user = await DB.getUserByToken(authToken);
   if (user) {
     next();

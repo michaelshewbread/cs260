@@ -15,6 +15,7 @@ async function login() {
     });
     if (response.ok) {
       localStorage.setItem("username", username);
+      unlockHeader();
       window.location.href = "main.html";
     } else {
       console.log("Authentication error!");
@@ -22,6 +23,10 @@ async function login() {
   } catch {
     // *gulp*
   }
+}
+
+async function authenticate(username) {
+
 }
 
 async function register() {
@@ -39,6 +44,7 @@ async function register() {
     });
     if (response.ok) {
       localStorage.setItem("username", username);
+      unlockHeader();
       // to the game!
       window.location.href = "main.html";
     } else {
@@ -48,3 +54,36 @@ async function register() {
     // *gulp*
   }
 }
+
+//see if the current user is authenticated
+async function authenticate() {
+  try {
+    const response = await fetch('api/auth/me');
+    console.log(response.username);
+    if (response.ok) {
+      unlockHeader();
+    } else {
+      lockHeader();
+    }
+  } catch {
+    // *gulp*
+  }
+}
+
+function unlockHeader() {
+  const header = document.getElementsByClassName('restricted');
+  for (let i = 0; i < header.length; i++) {
+    header[i].style.visibility = "visible";
+  }
+  console.log("done");
+}
+
+function lockHeader() {
+  const header = document.getElementsByClassName('restricted');
+  for (let i = 0; i < header.length; i++) {
+    header[i].style.visibility = "hidden";
+  }
+  console.log("done");
+}
+
+authenticate();

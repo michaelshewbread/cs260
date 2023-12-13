@@ -38,6 +38,10 @@ function getUser(username) {
     return userCollection.findOne({ username: username });
 }
 
+async function authenticate(authToken) {
+    return await userCollection.findOne({ token: authToken });
+}
+
 async function registerUser(username, password) {
     const passwordHash = await bcrypt.hash(password, 10);
   
@@ -51,5 +55,5 @@ async function registerUser(username, password) {
     return user;
 }
 
-  module.exports = { addScore, getLeaderboard, getUser, registerUser };
+  module.exports = { addScore, getLeaderboard, getUser, registerUser, authenticate };
   
