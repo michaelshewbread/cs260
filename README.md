@@ -121,4 +121,4 @@ Yes!
 ### Stores and retrieves credentials in MongoDB
 Yes, all user information is accessed through the database.
 ### Restricts application functionality based upon authentication
-The "play" and "leaderboard" links are hidden unless a session cookie is detected.
+The "play" and "leaderboard" links are hidden unless a session cookie with an authToken is detected.
