@@ -63,8 +63,8 @@ apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
   // look for that num num
-  authToken = document.cookies['token'];
-  const user = await DB.getUserByToken(authToken);
+  authToken = req.cookies['token'];
+  const user = await DB.authenticate(authToken);
   if (user) {
     next();
   } else {
