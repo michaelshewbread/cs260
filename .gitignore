@@ -3,3 +3,4 @@ dbConfig.json
 mongoTest/
 .vscode/
 authTest/
+testWebSocket/
