@@ -113,10 +113,12 @@ Replaced connections with local storage to database.
 Currently all scores are saved to and pulled from the database.
 
 ## Login Deliverable
+Added the ability to register a new user, login an existing one, and store users in mongoDB.
 ### Supports new user registration
-
+Indeed, it does!
 ### Supports existing user authentication
-
+Yes!
 ### Stores and retrieves credentials in MongoDB
-
+Yes, all user information is accessed through the database.
 ### Restricts application functionality based upon authentication
+The "play" and "leaderboard" links are hidden unless a session cookie is detected.
