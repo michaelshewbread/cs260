@@ -1,3 +1,5 @@
+//const { type } = require("express/lib/response");
+
 let player = document.querySelector(".player");
 let map = document.querySelector(".map");
 let coconut = document.querySelector(".thrown-coconut");
@@ -11,7 +13,82 @@ let gameOverText = document.querySelector("#gameOverText");
 let quoteText = document.querySelector("#quoteText");
 
 let playername = document.querySelector(".player-name");
-playername.textContent = localStorage.getItem("username");
+let playerUsername = localStorage.getItem("username")
+playername.textContent = playerUsername;
+
+// Functionality for peer communication using WebSocket
+const gameScreen = document.querySelector('#gameScreen');
+let playerList = [];
+
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+let socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+socket.onopen = (event) => {
+    //this.displayMsg('connected!');
+    broadcastPlayerUpdate('join', playerUsername);
+};
+socket.onclose = (event) => {
+    //this.displayMsg('disconnected!');
+    broadcastPlayerUpdate('exit', playerUsername);
+};
+socket.onmessage = async (event) => {
+    const data = JSON.parse(await event.data.text());
+    if (data.type === 'positionUpdate') {
+        // update player position
+        //console.log("position update!");
+        //console.log(data.position);
+        let player = playerList.find(user => user.id === data.username);
+        if (player) {
+            //console.log("player found!");
+            let xpos = player.xpos = data.position.xpos;
+            let ypos = player.ypos = data.position.ypos;
+            let rot = player.rot = data.position.rot;
+            document.querySelector(`#${data.username}`).style.transform = "translate("+ (xpos) + "px," + (ypos) + "px)";
+            document.querySelector(`#${data.username}`).style.transform = "rotate(" + rot + "deg)";
+        }
+    } else {
+            if (data.method === 'join') {
+                console.log("new player!");
+                const newPlayer = document.createElement('div');
+                newPlayer.classList.add('player');
+                let id = data.username;
+                newPlayer.setAttribute("id", id);
+                playerObj = {id: id, xpos: startXpos, ypos: startYpos, rot: 0};
+                playerList.push(playerObj);
+                gameScreen.appendChild(newPlayer);
+            } else {
+                console.log("player exited!");
+                const player = document.querySelector(`#${data.username}`);
+                gameScreen.removeChild(player);
+                playerList.splice(indexOf(data.username), 1);
+            }
+    }
+    //this.displayMsg('player', msg.from, `started a new game`);
+
+};
+
+function displayMsg(cls, from, msg) {
+    const chatText = document.querySelector('#player-messages');
+    chatText.innerHTML =
+        `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+}
+
+function broadcastPos(username, newPosition) {
+    const event = {
+        type: 'positionUpdate',
+        username: username,
+        position: newPosition,
+    };
+    socket.send(JSON.stringify(event));
+}
+
+function broadcastPlayerUpdate(method, username) {
+    const event = {
+        type: 'newPlayer',
+        method: method,
+        username: username,
+    };
+    socket.send(JSON.stringify(event));
+}
 
 let xpos = 0;
 let ypos = 0;
@@ -78,6 +155,9 @@ function incrementTime() {
         }
         secondCounter.innerHTML = seconds;
     }
+    // also send out position update info
+    let pos = {xpos:xpos, ypos:ypos, rot:rot};
+    broadcastPos(playerUsername, pos);
 }
 
 

@@ -55,7 +55,7 @@ canvas {
 
 }
 
-.game-screen {
+#gameScreen {
     display: block;
     position: relative;
     height: 688px;
