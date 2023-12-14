@@ -43,7 +43,7 @@ socket.onmessage = async (event) => {
             let ypos = player.ypos = data.position.ypos;
             let rot = player.rot = data.position.rot;
             document.querySelector(`#${data.username}`).style.transform = "translate("+ (xpos) + "px," + (ypos) + "px)";
-            document.querySelector(`#${data.username}`).style.transform = "rotate(" + rot + "deg)";
+            document.querySelector(`#${data.username}`).style.transform += "rotate(" + rot + "deg)";
         }
     } else {
             if (data.method === 'join') {
@@ -88,6 +88,13 @@ function broadcastPlayerUpdate(method, username) {
         username: username,
     };
     socket.send(JSON.stringify(event));
+}
+
+setInterval(sendPacket, 10);
+function sendPacket() {
+    // send out position update info
+    let pos = {xpos:xpos, ypos:ypos, rot:rot};
+    broadcastPos(playerUsername, pos);
 }
 
 let xpos = 0;
@@ -143,6 +150,7 @@ step();
 
 setInterval(incrementTime, 1000);
 
+
 function incrementTime() {
     if (!isDead) {
         seconds++;
@@ -155,9 +163,6 @@ function incrementTime() {
         }
         secondCounter.innerHTML = seconds;
     }
-    // also send out position update info
-    let pos = {xpos:xpos, ypos:ypos, rot:rot};
-    broadcastPos(playerUsername, pos);
 }
 
 
