@@ -122,3 +122,14 @@ Yes!
 Yes, all user information is accessed through the database.
 ### Restricts application functionality based upon authentication
 The "play" and "leaderboard" links are hidden unless a session cookie with an authToken is detected.
+
+## WebSocket Deliverable
+Added multiplayer functionality - minus projectiles - so really just player positioning and rotation. All implemented through webSockets and some moderately jerry-rigged javascript.
+### Backend listens for WebSocket connection
+Yes!
+### Frontend makes WebSocket connection
+Yes!
+### Data sent over WebSocket connection
+For each additional player that enters the game, a message is sent out via webSocket and the other players receive their information to be injected into the DOM as a new independent element. Every time-step (set to 10ms) each player broadcasts their position and rotation to the other players, and it is each host's responsibility to accurately update the position of the players. My solutions to positioning leave many vulnerabilities, but they do utilize webSockets, at least, and updating is pretty fast. 
+### WebSocket data displayed in the application interface
+When receiving player positions their monkey character is moved and rotated accordingly by setting their transform attribute in css through javascript. 
