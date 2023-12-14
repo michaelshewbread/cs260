@@ -81,9 +81,26 @@ canvas {
     z-index: 1;
 }
 
-.player {
+.monkey {
     content: url(assets/munkey.png);
     position: absolute;
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    top: 0;
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top: auto;
+    margin-bottom: auto;
+    overflow: hidden;
+    /*animation-name: spin;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;*/
+}
+
+.enemy {
+    content: url(assets/munkey.png);
+    /*position: absolute;
     left: 0; 
     right: 0; 
     bottom: 0;

@@ -1,6 +1,4 @@
-//const { type } = require("express/lib/response");
-
-let player = document.querySelector(".player");
+let player = document.querySelector("#player");
 let map = document.querySelector(".map");
 let coconut = document.querySelector(".thrown-coconut");
 let secondCounter = document.querySelector("#seconds");
@@ -15,16 +13,22 @@ let quoteText = document.querySelector("#quoteText");
 let playername = document.querySelector(".player-name");
 let playerUsername = localStorage.getItem("username")
 playername.textContent = playerUsername;
+player.setAttribute("id", playerUsername);
+
+const startXpos = -1200;
+const startYpos = -800;
 
 // Functionality for peer communication using WebSocket
 const gameScreen = document.querySelector('#gameScreen');
-let playerList = [];
+let playerList = [{id: playerUsername, xpos: startXpos, ypos: startYpos, rot: 0}];
+let socketReady = false;
 
 const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
 let socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 socket.onopen = (event) => {
     //this.displayMsg('connected!');
     broadcastPlayerUpdate('join', playerUsername);
+    socketReady = true;
 };
 socket.onclose = (event) => {
     //this.displayMsg('disconnected!');
@@ -36,29 +40,36 @@ socket.onmessage = async (event) => {
         // update player position
         //console.log("position update!");
         //console.log(data.position);
-        let player = playerList.find(user => user.id === data.username);
-        if (player) {
+        let enemy = playerList.find(user => user.id === data.username);
+        if (enemy) {
             //console.log("player found!");
-            let xpos = player.xpos = data.position.xpos;
-            let ypos = player.ypos = data.position.ypos;
-            let rot = player.rot = data.position.rot;
-            document.querySelector(`#${data.username}`).style.transform = "translate("+ (xpos) + "px," + (ypos) + "px)";
-            document.querySelector(`#${data.username}`).style.transform += "rotate(" + rot + "deg)";
+            enemy.xpos = data.position.xpos;
+            enemy.ypos = data.position.ypos;
+            enemy.rot = data.position.rot;
+            //document.querySelector(`#${data.username}`).style.transform = "translate("+ (xpos) + "px," + (ypos) + "px)";
+            //document.querySelector(`#${data.username}`).style.transform += "rotate(" + rot + "deg)";
         }
     } else {
             if (data.method === 'join') {
                 console.log("new player!");
-                const newPlayer = document.createElement('div');
-                newPlayer.classList.add('player');
-                let id = data.username;
-                newPlayer.setAttribute("id", id);
-                playerObj = {id: id, xpos: startXpos, ypos: startYpos, rot: 0};
-                playerList.push(playerObj);
-                gameScreen.appendChild(newPlayer);
+                // see if we already have the player in our list
+                let enemy = playerList.find(user => user.id === data.username);
+                if (!enemy) {
+                    // send own data
+                    broadcastPlayerUpdate('join', playerUsername);
+                    let newPlayer = document.createElement('div');
+                    newPlayer.classList.add('monkey');
+                    //newPlayer.style.position = "relative";
+                    let id = data.username;
+                    newPlayer.setAttribute("id", id);
+                    playerObj = {id: id, xpos: startXpos, ypos: startYpos, rot: 0};
+                    playerList.push(playerObj);
+                    gameScreen.appendChild(newPlayer);
+                }
             } else {
                 console.log("player exited!");
-                const player = document.querySelector(`#${data.username}`);
-                gameScreen.removeChild(player);
+                const enemy = document.querySelector(`#${data.username}`);
+                gameScreen.removeChild(enemy);
                 playerList.splice(indexOf(data.username), 1);
             }
     }
@@ -90,11 +101,15 @@ function broadcastPlayerUpdate(method, username) {
     socket.send(JSON.stringify(event));
 }
 
+// decrease interval for less latency:
+// I think 10 is prolly the max speed for 2 players
 setInterval(sendPacket, 10);
 function sendPacket() {
-    // send out position update info
-    let pos = {xpos:xpos, ypos:ypos, rot:rot};
-    broadcastPos(playerUsername, pos);
+    if (socketReady) {
+        // send out position update info
+        let p = {xpos:xpos, ypos:ypos, rot:rot};
+        broadcastPos(playerUsername, p);
+    }
 }
 
 let xpos = 0;
@@ -108,9 +123,6 @@ let minutes = 0;
 const screenWidth = window.screen.width;
 const screenHeight = window.screen.height; 
 
-const startXpos = -1200;
-const startYpos = -800;
-
 let held_directions = [];
 
 let speed = 5;
@@ -118,6 +130,7 @@ const walkSpeed = 5;
 const runSpeed = 7;
 
 let isDead = false;
+let mapTransform = {x:(startXpos+innerWidth)/2, y: startYpos};
 
 const positionPlayer = () => {
     for (i = 0; i < held_directions.length; i++) {
@@ -135,12 +148,25 @@ const positionPlayer = () => {
             ypos += speed;
         }
     }
-    map.style.transform = "translate("+ ((startXpos+innerWidth)/2-xpos) + "px," + (startYpos-ypos) + "px)";
+    map.style.transform = "translate("+ (mapTransform.x-xpos) + "px," + (mapTransform.y-ypos) + "px)";
     
     player.style.transform = "rotate(" + rot + "deg)";
 }
 
+function positionEnemies() {
+    for (let i = 0; i < playerList.length; i++) {
+        let enem = playerList[i];
+        let xp = enem.xpos -xpos;
+        let yp = enem.ypos -ypos;
+        let ro = enem.rot;
+        let enemEl = document.querySelector(`#${enem.id}`);
+        enemEl.style.transform = "translate("+ (xp) + "px," + (yp) + "px)";
+        enemEl.style.transform += "rotate(" + ro + "deg)";
+    }
+}
+
 const step = () => {
+    positionEnemies();
     if (!isDead) {
         positionPlayer();
         window.requestAnimationFrame(()=> {step();})
